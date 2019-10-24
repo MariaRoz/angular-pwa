@@ -9,6 +9,10 @@ import {MaterialModule} from './material.module';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import { HomeComponent } from './home/home.component';
+import {StoreModule} from '@ngrx/store';
+import {AppReducer} from './store';
+import {EffectsModule} from '@ngrx/effects';
+import {MessageEffects} from './home/store/message.effects';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,9 @@ import { HomeComponent } from './home/home.component';
     BrowserAnimationsModule,
     MaterialModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(AppReducer),
+    EffectsModule.forRoot([MessageEffects])
   ],
   providers: [],
   bootstrap: [AppComponent]
