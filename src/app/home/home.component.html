@@ -1,7 +1,7 @@
 
-<div *ngIf="isLoading" class="loading-spinner">
-loading
-</div>
+<!--<div *ngIf="isLoading" class="loading-spinner">-->
+<!--loading-->
+<!--</div>-->
 <mat-card>
   <mat-card-header>
     Messages:
@@ -13,7 +13,7 @@ loading
 </mat-card>
 
 <div style="margin-top: 10px">
-  <p><textarea rows="5" cols="50" placeholder="..." ></textarea></p>
-  <p><button mat-raised-button color="accent" (click)="AddMessage()" type="button">Send</button></p>
+  <p><textarea rows="5" cols="50" placeholder="..."  #textInput></textarea></p>
+  <p><button mat-raised-button color="accent" (click)="AddMessage(textInput.value, '')" type="button">Send</button></p>
 </div>
 

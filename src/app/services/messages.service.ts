@@ -14,10 +14,17 @@ export class MessagesService {
   getMessages() {
     return this.http.get('http://localhost:3000/messages/' );
   }
+  sendMessage( message, author ) {
+    console.log(message, 'data');
+    return this.http.post('http://localhost:3000/messages/', { message, name: author });
+  }
   load() {
     this.store.dispatch( new MessageAction.LoadMessagesBegin() );
   }
   getMessagesFromStore() {
-    return this.store.select(fromApp.getMessageState);
+    return this.store.select(fromApp.getAllMessages);
+  }
+  sentMess(message, author) {
+    this.store.dispatch(new MessageAction.StartSendingMessage({ message, author}));
   }
 }

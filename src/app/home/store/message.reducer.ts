@@ -1,13 +1,16 @@
 import {ActionTypes, MessageActions} from './message.actions';
+import {MessageInterface} from '../../models/message.interface';
 
 export interface State {
-  data: [];
+  data: Array<MessageInterface>;
+  message: any;
   loading: boolean;
-  error: any;
+  error: string;
 }
 
 export const initialState: State = {
   data: null,
+  message: null,
   loading: false,
   error: null
 };
@@ -34,6 +37,31 @@ export function reducer(
     }
 
     case ActionTypes.LoadMessagesFailure: {
+      return {
+        ...state,
+        loading: false,
+        error: action.payload.error
+      };
+    }
+
+    case ActionTypes.StartSendingMessage: {
+      // const messages = { message: action.payload.message, name: action.payload.author};
+      return {
+        ...state,
+        loading: true,
+        error: null,
+        message: action.payload,
+      };
+    }
+
+    case ActionTypes.MessageSendSuccess: {
+      return {
+        ...state,
+        loading: false,
+      };
+    }
+
+    case ActionTypes.MessageSendFailure: {
       return {
         ...state,
         loading: false,

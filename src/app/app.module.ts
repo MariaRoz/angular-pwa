@@ -5,29 +5,31 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MaterialModule} from './material.module';
-import {AppRoutingModule} from './app-routing.module';
-import {HttpClientModule} from '@angular/common/http';
-import { HomeComponent } from './home/home.component';
-import {StoreModule} from '@ngrx/store';
-import {AppReducer} from './store';
-import {EffectsModule} from '@ngrx/effects';
-import {MessageEffects} from './home/store/message.effects';
+import { MaterialModule } from './material.module';
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { AppReducer } from './store';
+import { HomeModule } from './home/home.module';
+import { storeFreeze } from 'ngrx-store-freeze';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
   ],
   imports: [
     BrowserModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     MaterialModule,
+    HomeModule,
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(AppReducer),
-    EffectsModule.forRoot([MessageEffects])
+    StoreModule.forRoot(AppReducer, {
+      metaReducers: !environment.production ? [storeFreeze] : []
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,9 +1,27 @@
 import { Action } from '@ngrx/store';
 
 export enum ActionTypes {
-  LoadMessagesBegin = '[Messages] Load messages begin',
+  LoadMessagesBegin = '[Messages] Start loading messages ',
   LoadMessagesSuccess = '[Messages] Load messages success',
-  LoadMessagesFailure = '[Messages] Load messages failure'
+  LoadMessagesFailure = '[Messages] Load messages failure',
+  StartSendingMessage = '[Messages] Start sending message',
+  MessageSendSuccess = '[Messages] Message send success',
+  MessageSendFailure = '[Messages] Message send failure',
+}
+
+export class StartSendingMessage implements Action {
+  readonly type = ActionTypes.StartSendingMessage;
+  constructor(public payload: { message: string, author: string }) {}
+}
+
+export class MessageSendSuccess implements Action {
+  readonly type = ActionTypes.MessageSendSuccess;
+}
+
+export class MessageSendFailure implements Action {
+  readonly type = ActionTypes.MessageSendFailure;
+
+  constructor(public payload: { error: string }) {}
 }
 
 export class LoadMessagesBegin implements Action {
@@ -19,7 +37,8 @@ export class LoadMessagesSuccess implements Action {
 export class LoadMessagesFailure implements Action {
   readonly type = ActionTypes.LoadMessagesFailure;
 
-  constructor(public payload: { error: any }) {}
+  constructor(public payload: { error: string }) {}
 }
 
-export type MessageActions = LoadMessagesBegin | LoadMessagesSuccess | LoadMessagesFailure;
+export type MessageActions = LoadMessagesBegin | LoadMessagesSuccess | LoadMessagesFailure
+  | StartSendingMessage | MessageSendSuccess | MessageSendFailure;
