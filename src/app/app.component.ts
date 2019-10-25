@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MessagesService} from './services/messages.service';
+import {ChatService} from './services/chat.service';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +7,6 @@ import {MessagesService} from './services/messages.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  constructor(private mesService: MessagesService) {
-    this.mesService.load();
+  constructor() {
   }
 }

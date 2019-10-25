@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import * as MessageActions from './message.actions';
+import * as MessageActions from './chat.actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import {map, switchMap, catchError, tap} from 'rxjs/operators';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import {MessagesService} from '../../services/messages.service';
+import { ChatService } from '../../services/chat.service';
+import { LoadMessagesBegin } from './chat.actions';
 
 @Injectable()
-export class MessageEffects {
-  constructor(private actions: Actions, private mesService: MessagesService) {}
+export class ChatEffects {
+  constructor(private actions: Actions, private mesService: ChatService) {}
 
   @Effect()
-  loadMessages = this.actions.pipe(
+  loadMessagesBegin$ = this.actions.pipe(
     ofType(MessageActions.ActionTypes.LoadMessagesBegin),
     switchMap(() => {
       return this.mesService.getMessages().pipe(
@@ -23,16 +24,17 @@ export class MessageEffects {
     })
   );
 
-  @Effect()
+  @Effect({dispatch: true})
   sendMessage = this.actions.pipe(
     ofType(MessageActions.ActionTypes.StartSendingMessage),
     switchMap((sendAction: MessageActions.StartSendingMessage) => {
-      return this.mesService.sendMessage(sendAction.payload.message, sendAction.payload.author).pipe(
+      return this.mesService.sendMessage(sendAction.payload).pipe(
         map(() => new MessageActions.MessageSendSuccess()),
         catchError(error =>
           of(new MessageActions.MessageSendFailure({ error }))
         )
       );
-    })
+    }),
+    map(() => new LoadMessagesBegin())
   );
 }

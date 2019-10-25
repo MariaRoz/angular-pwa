@@ -10,9 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { AppReducer } from './store';
-import { HomeModule } from './home/home.module';
+import { HomeModule } from './chat/home.module';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import {EffectsModule} from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
       metaReducers: !environment.production ? [storeFreeze] : []
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,21 +1,13 @@
 import {
-  ActionReducerMap,
-  createSelector,
+  ActionReducerMap
 } from '@ngrx/store';
 
-import * as fromMessages from '../home/store/message.reducer';
-
+import { chatReducer, ChatState } from '../chat/store/chat.reducer';
 
 export interface AppState {
-  data: fromMessages.State;
+  chat: ChatState;
 }
 
 export const AppReducer: ActionReducerMap<AppState> = {
-  data: fromMessages.reducer
+  chat: chatReducer
 };
-
-export const getMessageState = (state: AppState) => state.data;
-export const getAllMessages = createSelector(
-  getMessageState,
-  fromMessages.getMessages
-);

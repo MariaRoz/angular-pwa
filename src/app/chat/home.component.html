@@ -1,0 +1,32 @@
+<div class="container">
+  <div *ngIf="isLoading" class="loading-spinner">
+  </div>
+  <mat-card>
+    <mat-card-header>
+    Chat:
+    </mat-card-header>
+    <hr/>
+    <div class="chat-container__grid">
+      <p *ngIf="(messages$ | async)?.length === 0">No messages yet.</p>
+      <div class="chat-container__messages">
+        <mat-card-content *ngFor=" let message of messages$ | async">
+          {{message.message}}
+          <span class="time"></span>
+        </mat-card-content>
+      </div>
+      <div class="chat-container__button">
+        <mat-form-field>
+          <mat-label>Enter your message</mat-label>
+          <textarea matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="20"
+              #messageInput >
+          </textarea>
+        </mat-form-field>
+        <button mat-raised-button color="accent" (click)="addMessage(messageInput.value)" type="button">Send</button>
+      </div>
+    </div>
+  </mat-card>
+</div>

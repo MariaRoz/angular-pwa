@@ -1,4 +1,5 @@
 import { Action } from '@ngrx/store';
+import { Message } from '../../models/message.interface';
 
 export enum ActionTypes {
   LoadMessagesBegin = '[Messages] Start loading messages ',
@@ -11,7 +12,7 @@ export enum ActionTypes {
 
 export class StartSendingMessage implements Action {
   readonly type = ActionTypes.StartSendingMessage;
-  constructor(public payload: { message: string, author: string }) {}
+  constructor(public payload: { message: string }) {}
 }
 
 export class MessageSendSuccess implements Action {
@@ -31,7 +32,7 @@ export class LoadMessagesBegin implements Action {
 export class LoadMessagesSuccess implements Action {
   readonly type = ActionTypes.LoadMessagesSuccess;
 
-  constructor(public payload: { data: any }) {}
+  constructor(public payload: { data: Message[] }) {}
 }
 
 export class LoadMessagesFailure implements Action {
@@ -40,5 +41,5 @@ export class LoadMessagesFailure implements Action {
   constructor(public payload: { error: string }) {}
 }
 
-export type MessageActions = LoadMessagesBegin | LoadMessagesSuccess | LoadMessagesFailure
+export type ChatActions = LoadMessagesBegin | LoadMessagesSuccess | LoadMessagesFailure
   | StartSendingMessage | MessageSendSuccess | MessageSendFailure;

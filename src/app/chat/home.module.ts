@@ -4,9 +4,9 @@ import { RouterModule } from '@angular/router';
 import {HomeComponent} from './home.component';
 import { routes } from './home.routing';
 import {MaterialModule} from '../material.module';
-import { MessageEffects } from './store/message.effects';
+import { ChatEffects } from './store/chat.effects';
 import { EffectsModule } from '@ngrx/effects';
-import { reducer } from './store/message.reducer'
+import { chatReducer } from './store/chat.reducer'
 import { StoreModule } from '@ngrx/store';
 
 @NgModule({
@@ -16,8 +16,8 @@ import { StoreModule } from '@ngrx/store';
   imports: [
     BrowserModule,
     RouterModule.forChild(routes),
-    EffectsModule.forRoot([MessageEffects]),
-    StoreModule.forFeature('reducer', reducer),
+    StoreModule.forFeature('chat', chatReducer),
+    EffectsModule.forFeature([ChatEffects]),
     MaterialModule
   ],
   providers: [],
