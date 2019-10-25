@@ -9,10 +9,10 @@ import {selectMessages} from './store/chat.selectors';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  templateUrl: './chat.component.html',
+  styleUrls: ['./chat.component.css']
 })
-export class HomeComponent implements OnInit {
+export class ChatComponent implements OnInit {
   isLoading = false;
   error: string = null;
 

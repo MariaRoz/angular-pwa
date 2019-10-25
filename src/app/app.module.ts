@@ -10,10 +10,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { AppReducer } from './store';
-import { HomeModule } from './chat/home.module';
+import { ChatModule } from './chat/chat.module';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import {EffectsModule} from '@ngrx/effects';
+import { EffectsModule } from '@ngrx/effects';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import {EffectsModule} from '@ngrx/effects';
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     BrowserAnimationsModule,
     MaterialModule,
-    HomeModule,
+    ChatModule,
     AppRoutingModule,
     HttpClientModule,
     StoreModule.forRoot(AppReducer, {
