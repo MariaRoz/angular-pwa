@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ChatService} from '../services/chat.service';
-import {Message} from '../models/message.interface';
+import { Message } from '../models/message.interface';
 import {select, Store} from '@ngrx/store';
 import * as fromApp from '../store';
-import {LoadMessagesBegin, StartSendingMessage} from './store/chat.actions';
-import {Observable, of} from 'rxjs';
-import {selectMessages} from './store/chat.selectors';
+import { LoadMessagesBegin } from './store/chat.actions';
+import { Observable, of } from 'rxjs';
+import { selectMessages } from './store/chat.selectors';
 
 @Component({
   selector: 'app-home',
@@ -25,9 +24,5 @@ export class ChatComponent implements OnInit {
     );
 
     this.store.dispatch(new LoadMessagesBegin());
-  }
-
-  addMessage(message): void {
-    this.store.dispatch(new StartSendingMessage(message));
   }
 }

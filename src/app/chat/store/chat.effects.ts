@@ -5,7 +5,6 @@ import { map, switchMap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { ChatService } from '../../services/chat.service';
-import { LoadMessagesBegin } from './chat.actions';
 
 @Injectable()
 export class ChatEffects {
@@ -22,19 +21,5 @@ export class ChatEffects {
         )
       );
     })
-  );
-
-  @Effect({dispatch: true})
-  sendMessage = this.actions.pipe(
-    ofType(MessageActions.ActionTypes.StartSendingMessage),
-    switchMap((sendAction: MessageActions.StartSendingMessage) => {
-      return this.mesService.sendMessage(sendAction.payload).pipe(
-        map(() => new MessageActions.MessageSendSuccess()),
-        catchError(error =>
-          of(new MessageActions.MessageSendFailure({ error }))
-        )
-      );
-    }),
-    map(() => new LoadMessagesBegin())
   );
 }
