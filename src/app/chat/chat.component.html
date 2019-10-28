@@ -25,7 +25,7 @@
               #messageInput >
           </textarea>
         </mat-form-field>
-        <button mat-raised-button color="accent" type="button">Send</button>
+        <button mat-raised-button color="accent" (click)="addMessage(messageInput.value)" type="button">Send</button>
       </div>
     </div>
   </mat-card>

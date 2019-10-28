@@ -16,4 +16,8 @@ export class ChatService {
   getMessages(): Observable<Message[]> {
     return this.http.get<Message[]>('http://localhost:3000/messages/' );
   }
+
+  sendMessage(message): Observable<Message> {
+    return this.http.post<Message>('http://localhost:3000/messages/', { message, name: '' });
+  }
 }
