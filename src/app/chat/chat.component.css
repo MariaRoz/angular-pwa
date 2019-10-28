@@ -22,7 +22,6 @@ mat-card-content {
 }
 .time {
   float: right;
-  font-size: 12px;
-  margin-top: 10px;
+  font-size: 10px;
   color: #aaa;
 }

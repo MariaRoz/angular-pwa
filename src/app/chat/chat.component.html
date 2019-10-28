@@ -7,10 +7,11 @@
     </mat-card-header>
     <hr/>
     <div class="chat-container__grid">
+      <p *ngIf="(messages$ | async)?.length === 0">No messages yet.</p>
       <div class="chat-container__messages">
-        <mat-card-content *ngFor=" let message of messages">
-          {{message}}
-          <span class="time"></span>
+        <mat-card-content *ngFor=" let message of messages$ | async">
+          {{message.message}}
+          <span class="time">{{message.createdAt | date: "dd-MM-yyyy hh:mm:ss" }} </span>
         </mat-card-content>
       </div>
       <div class="chat-container__button">
@@ -20,10 +21,11 @@
               cdkTextareaAutosize
               #autosize="cdkTextareaAutosize"
               cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="20">
+              cdkAutosizeMaxRows="20"
+              #messageInput >
           </textarea>
         </mat-form-field>
-        <button mat-raised-button color="accent" (click)="AddMessage()" type="button">Send</button>
+        <button mat-raised-button color="accent" type="button">Send</button>
       </div>
     </div>
   </mat-card>
