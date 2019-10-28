@@ -14,7 +14,6 @@ import {selectMessages} from './store/chat.selectors';
 })
 export class ChatComponent implements OnInit {
   isLoading = false;
-  error: string = null;
 
   public messages$: Observable<Message[]> = of([]);
 

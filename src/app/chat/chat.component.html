@@ -11,7 +11,7 @@
       <div class="chat-container__messages">
         <mat-card-content *ngFor=" let message of messages$ | async">
           {{message.message}}
-          <span class="time"></span>
+          <span class="time">{{message.createdAt | date: "dd-MM-yyyy hh:mm:ss" }} </span>
         </mat-card-content>
       </div>
       <div class="chat-container__button">
