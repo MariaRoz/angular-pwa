@@ -18,6 +18,6 @@ export class ChatService {
   }
 
   sendMessage(message): Observable<Message> {
-    return this.http.post<Message>('http://localhost:3000/messages/', { message, name: '' });
+    return this.http.post<Message>('http://localhost:3000/messages/', { message });
   }
 }
