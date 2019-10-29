@@ -26,13 +26,8 @@ export class ChatEffects {
   @Effect({dispatch: true})
   sendMessage = this.actions.pipe(
     ofType(MessageActions.ActionTypes.StartSendingMessage),
-    switchMap((sendAction: MessageActions.StartSendingMessage) => {
-      return this.mesService.sendMessage(sendAction.payload).pipe(
-        mergeMap(() => [new MessageActions.MessageSendSuccess(), new MessageActions.LoadMessagesBegin()]),
-        catchError(error =>
-          of(new MessageActions.MessageSendFailure({ error }))
-        )
-      );
-    }),
+    switchMap((sendAction: MessageActions.StartSendingMessage) => this.mesService.sendMessage(sendAction.payload)),
+    mergeMap(() => [new MessageActions.MessageSendSuccess(), new MessageActions.LoadMessagesBegin()]),
+    catchError(error => of(new MessageActions.MessageSendFailure({error})))
   );
 }
