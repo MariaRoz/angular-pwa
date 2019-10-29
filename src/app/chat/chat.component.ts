@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Message } from '../models/message.interface';
 import {select, Store} from '@ngrx/store';
 import * as fromApp from '../store';
-import { LoadMessagesBegin } from './store/chat.actions';
+import { LoadMessagesBegin, StartSendingMessage } from './store/chat.actions';
 import { Observable, of } from 'rxjs';
 import { selectMessages } from './store/chat.selectors';
 
@@ -24,5 +24,9 @@ export class ChatComponent implements OnInit {
     );
 
     this.store.dispatch(new LoadMessagesBegin());
+  }
+
+  addMessage(message): void {
+    this.store.dispatch(new StartSendingMessage(message));
   }
 }
