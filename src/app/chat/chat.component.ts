@@ -27,6 +27,6 @@ export class ChatComponent implements OnInit {
   }
 
   addMessage(message): void {
-    this.store.dispatch(new StartSendingMessage(message));
+    this.store.dispatch(new StartSendingMessage({message}));
   }
 }
