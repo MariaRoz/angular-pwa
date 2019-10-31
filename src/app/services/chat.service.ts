@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import * as fromApp from '../store';
-import {Store} from '@ngrx/store';
 import {Message} from '../models/message.interface';
 import {Observable} from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ChatService {
 
-  constructor(private http: HttpClient, private store: Store<fromApp.AppState>) {
+  constructor(private http: HttpClient) {
   }
 
   getMessages(): Observable<Message[]> {

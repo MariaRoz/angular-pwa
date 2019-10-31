@@ -8,6 +8,8 @@ import { ChatEffects } from './store/chat.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { chatReducer } from './store/chat.reducer';
 import { StoreModule } from '@ngrx/store';
+import {ChatService} from '../services/chat.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -18,9 +20,12 @@ import { StoreModule } from '@ngrx/store';
     RouterModule.forChild(routes),
     StoreModule.forFeature('chat', chatReducer),
     EffectsModule.forFeature([ChatEffects]),
-    MaterialModule
+    MaterialModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    ChatService
+  ],
   bootstrap: [ChatComponent]
 })
 export class ChatModule {
