@@ -4,7 +4,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import {map, switchMap, catchError, mergeMap} from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { ChatService } from '../../services/chat.service';
+import { ChatService } from '../../../services/chat.service';
 
 @Injectable()
 export class ChatEffects {

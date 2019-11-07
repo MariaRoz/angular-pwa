@@ -1,19 +1,19 @@
 import { Store, StoreModule } from '@ngrx/store';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ChatComponent } from './chat.component';
-import { MaterialModule } from '../material.module';
+import { MessagesComponent } from './messages.component';
+import { MaterialModule } from '../../../material.module';
 import { RouterTestingModule } from '@angular/router/testing';
-import { LoadMessagesBegin, StartSendingMessage } from './store/chat.actions';
+import { LoadMessagesBegin, StartSendingMessage } from '../store/chat.actions';
 import { MockStore } from '@ngrx/store/testing';
-import * as fromApp from '../store';
+import * as fromApp from '../../../store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { chatReducer, ChatState } from './store/chat.reducer';
+import { chatReducer, ChatState } from '../store/chat.reducer';
 import { of, throwError } from 'rxjs';
 import { EffectsModule } from '@ngrx/effects';
-import { ChatEffects } from './store/chat.effects';
+import { ChatEffects } from '../store/chat.effects';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ChatService } from '../services/chat.service';
-import { Message } from '../models/message.interface';
+import { ChatService } from '../../../services/chat.service';
+import { Message } from '../../../models/message.interface';
 
 
 const MOCKED_MESSAGE_1: Message = {
@@ -46,8 +46,8 @@ const mockedReducer = (initialState = mockedInitialState, action) => {
 const spyChatService = jasmine.createSpyObj('ChatService', ['getMessages']);
 
 describe('ChatComponent', () => {
-  let component: ChatComponent;
-  let fixture: ComponentFixture<ChatComponent>;
+  let component: MessagesComponent;
+  let fixture: ComponentFixture<MessagesComponent>;
   let store: MockStore<fromApp.AppState>;
   let MockedChatService: jasmine.SpyObj<ChatService>;
 
@@ -61,7 +61,7 @@ describe('ChatComponent', () => {
         HttpClientTestingModule
       ],
       declarations: [
-        ChatComponent
+        MessagesComponent
       ],
       providers: [
         {provide: ChatService, useValue: spyChatService}
@@ -69,7 +69,7 @@ describe('ChatComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(ChatComponent);
+    fixture = TestBed.createComponent(MessagesComponent);
     component = fixture.componentInstance;
     store = TestBed.get(Store);
     spyOn(store, 'dispatch').and.callThrough();
@@ -77,7 +77,7 @@ describe('ChatComponent', () => {
     MockedChatService = TestBed.get(ChatService);
   });
 
-  it('should create chat component', () => {
+  it('should create messages component', () => {
     expect(component).toBeTruthy();
   });
 

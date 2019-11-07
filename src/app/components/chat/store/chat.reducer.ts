@@ -1,5 +1,5 @@
 import { ActionTypes, ChatActions } from './chat.actions';
-import { Message } from '../../models/message.interface';
+import { Message } from '../../../models/message.interface';
 
 export interface ChatState {
   messages: Message[];
