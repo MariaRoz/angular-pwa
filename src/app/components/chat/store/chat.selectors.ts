@@ -1,4 +1,4 @@
-import { AppState } from '../../store';
+import { AppState } from '../../../store';
 import { createSelector } from '@ngrx/store';
 
 export const selectChatFeature = (state: AppState) => state.chat;

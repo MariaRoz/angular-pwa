@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { Message } from '../models/message.interface';
+import { Message } from '../../../models/message.interface';
 import {select, Store} from '@ngrx/store';
-import * as fromApp from '../store';
-import { LoadMessagesBegin, StartSendingMessage } from './store/chat.actions';
+import * as fromApp from '../../../store';
+import { LoadMessagesBegin, StartSendingMessage } from '../store/chat.actions';
 import { Observable, of } from 'rxjs';
-import { selectMessages } from './store/chat.selectors';
+import { selectMessages } from '../store/chat.selectors';
 
 @Component({
   selector: 'app-home',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  templateUrl: './messages.component.html',
+  styleUrls: ['./messages.component.css']
 })
-export class ChatComponent implements OnInit {
+export class MessagesComponent implements OnInit {
   isLoading = false;
 
   public messages$: Observable<Message[]> = of([]);

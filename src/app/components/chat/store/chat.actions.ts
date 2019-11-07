@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { Message } from '../../models/message.interface';
+import { Message } from '../../../models/message.interface';
 
 export enum ActionTypes {
   LoadMessagesBegin = '[Messages] Start loading messages ',

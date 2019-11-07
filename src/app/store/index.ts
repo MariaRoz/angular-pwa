@@ -2,7 +2,7 @@ import {
   ActionReducerMap
 } from '@ngrx/store';
 
-import { chatReducer, ChatState } from '../chat/store/chat.reducer';
+import { chatReducer, ChatState } from '../components/chat/store/chat.reducer';
 
 export interface AppState {
   chat: ChatState;
