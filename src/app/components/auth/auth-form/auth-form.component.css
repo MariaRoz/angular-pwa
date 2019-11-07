@@ -1,0 +1,13 @@
+.container {
+  padding: 100px 0 0 80px;
+}
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto 100px;
+}
+.form-group {
+  width: 100%;
+}
