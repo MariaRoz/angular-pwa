@@ -1,8 +1,7 @@
 <div class="container">
   <mat-card class="form">
     <mat-card-header>
-      <mat-card-title *ngIf="!isLoginMode">Registration</mat-card-title>
-      <mat-card-title *ngIf="isLoginMode">Login</mat-card-title>
+      <mat-card-title>Registration</mat-card-title>
     </mat-card-header>
     <form #authForm="ngForm" autocomplete="false" (ngSubmit)="onSubmit(authForm)">
       <mat-card-content>
@@ -30,12 +29,10 @@
           mat-raised-button color="accent"
           matInput type="submit"
           [disabled]="!authForm.valid"
-        >
-          {{ isLoginMode ? 'Log in' : 'Registration' }}
-        </button>
-        <button mat-raised-button color="accent" (click)="onSwitchMode()" type="button">
-          Go to {{ isLoginMode ? 'Registration' : 'Login' }}
-        </button>
+        >Register</button>
+        <div class="message">
+          <a [routerLink]="['/login']" class="message">Already registered? Sign In</a>
+        </div>
       </mat-card-actions>
     </form>
   </mat-card>

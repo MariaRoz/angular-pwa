@@ -11,3 +11,11 @@
 .form-group {
   width: 100%;
 }
+.message {
+  margin-top: 10px;
+  text-decoration: none;
+}
+.message a {
+  text-decoration: none;
+  color: #ff4081;
+}

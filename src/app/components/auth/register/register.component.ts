@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 @Component({
-  selector: 'app-auth-form',
-  templateUrl: './auth-form.component.html',
-  styleUrls: ['./auth-form.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['../auth.component.css']
 })
-export class AuthFormComponent implements OnInit {
-  isLoginMode = true;
-
+export class RegisterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
@@ -24,8 +22,5 @@ export class AuthFormComponent implements OnInit {
     form.reset();
   }
 
-  onSwitchMode() {
-    this.isLoginMode = !this.isLoginMode;
-  }
 
 }
