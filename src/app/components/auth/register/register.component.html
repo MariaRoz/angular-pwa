@@ -1,0 +1,48 @@
+<div class="container">
+  <mat-card class="form">
+    <mat-card-header>
+      <mat-card-title>Registration</mat-card-title>
+    </mat-card-header>
+    <form #authForm="ngForm" autocomplete="false" (ngSubmit)="onSubmit(authForm)">
+      <mat-card-content>
+        <mat-form-field class="form-group" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email"
+                 id="email"
+                 ngModel
+                 name="email"
+                 required
+                 email/>
+        </mat-form-field>
+        <mat-form-field class="form-group" appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput type="password"
+                 id="password"
+                 ngModel
+                 name="password"
+                 required
+                 minlength="6"/>
+        </mat-form-field>
+        <mat-form-field class="form-group" appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput type="password"
+                 id="confirmPassword"
+                 ngModel
+                 name="confirmPassword"
+                 required
+                 minlength="6"/>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <button
+          mat-raised-button color="accent"
+          matInput type="submit"
+          [disabled]="!authForm.valid"
+        >Register</button>
+        <div class="message">
+          <a [routerLink]="['/login']" class="message">Already registered? Sign In</a>
+        </div>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</div>
