@@ -3,9 +3,8 @@ import { Action } from '@ngrx/store';
 export const enum AuthTypes {
   SIGNUP_START = '[Auth] Signup Start',
   AUTHENTICATE_SUCCESS = '[Auth] Success',
-  SIGNUP_FAIL = '[Auth] Signup Fail',
+  AUTHENTICATE_FAIL = '[Auth] Fail',
   LOGIN_START = '[Auth] Login Start',
-  LOGIN_FAIL = '[Auth] Login Fail',
   LOGOUT = '[Auth] Logout',
 }
 
@@ -17,11 +16,11 @@ export class SingUpStart implements Action {
 
 export class AuthenticateSuccess implements Action {
   readonly type = AuthTypes.AUTHENTICATE_SUCCESS;
-  constructor(public payload: { token: string, redirect: boolean }) {}
+  constructor(public payload: { token: string, username: string, redirect: boolean }) {}
 }
 
-export class SignUpFail implements Action {
-  readonly type = AuthTypes.SIGNUP_FAIL;
+export class AuthenticateFail implements Action {
+  readonly type = AuthTypes.AUTHENTICATE_FAIL;
 
   constructor(public payload: { error: string }) {}
 }
@@ -36,19 +35,12 @@ export class LoginStart implements Action {
   constructor(public payload: {email: string, password: string}) {}
 }
 
-export class LoginFail implements Action {
-  readonly type = AuthTypes.LOGIN_FAIL;
-  constructor(public payload: { error: string }) {}
-}
-
-
 export type AuthActions =
   | SingUpStart
   | AuthenticateSuccess
-  | SignUpFail
+  | AuthenticateFail
   | Logout
-  | LoginStart
-  | LoginFail;
+  | LoginStart;
 
 
 

@@ -1,10 +1,28 @@
-import {Injectable} from '@angular/core';
-import {Actions, Effect, ofType} from '@ngrx/effects';
-import {catchError, map, mergeMap, switchMap, tap} from 'rxjs/operators';
-import {of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { of } from 'rxjs';
 import * as AuthActions from './auth.action';
-import {UserService} from '../../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { Router } from '@angular/router';
+
+
+
+const handleError = (errorRes: any) => {
+  let errorMessage = 'An unknown error occurred!';
+  if (!errorRes.error || !errorRes.error.error) {
+    return of(new AuthActions.AuthenticateFail({error: errorMessage}));
+  }
+  switch (errorRes.error.error) {
+    case 'Unauthorized':
+      errorMessage = 'This password or email is not correct';
+      break;
+    case 'Username exist':
+      errorMessage = 'This username already exist.';
+      break;
+  }
+  return of(new AuthActions.AuthenticateFail({error: errorMessage}));
+};
 
 @Injectable()
 export class UserEffects {
@@ -21,10 +39,11 @@ export class UserEffects {
       return this.userService.registerUser(singupAction.payload.email, singupAction.payload.password).pipe(
         map(data => {
           localStorage.setItem('token', JSON.stringify(data.access_token));
-          return new AuthActions.AuthenticateSuccess({ token: data.access_token, redirect: true }); }),
-        catchError(error =>
-          of(new AuthActions.SignUpFail({error})))
-        );
+          return new AuthActions.AuthenticateSuccess({ token: data.access_token, username: data.username, redirect: true }); }),
+        catchError(err => {
+            return handleError(err);
+          }
+        ));
     })
   );
 
@@ -34,12 +53,12 @@ export class UserEffects {
     switchMap((loginStart: AuthActions.LoginStart) => {
       return this.userService.loginUser(loginStart.payload.email, loginStart.payload.password).pipe(
         map(data => {
-          console.log('data' +  data);
           localStorage.setItem('token', JSON.stringify(data.access_token));
-          return new AuthActions.AuthenticateSuccess({ token: data.access_token, redirect: true }); }),
-        catchError(error =>
-          of(new AuthActions.SignUpFail({error})))
-      );
+          return new AuthActions.AuthenticateSuccess({ token: data.access_token, username: data.username, redirect: true }); }),
+        catchError(err => {
+          return handleError(err);
+        }
+      ));
     })
   );
 

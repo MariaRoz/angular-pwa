@@ -3,7 +3,7 @@ import {
 } from '@ngrx/store';
 
 import { chatReducer, ChatState } from '../components/chat/store/chat.reducer';
-import {userReducer, UserState} from '../components/auth/store/auth.reducer';
+import { userReducer, UserState } from '../components/auth/store/auth.reducer';
 
 export interface AppState {
   chat: ChatState;

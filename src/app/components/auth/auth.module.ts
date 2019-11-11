@@ -5,12 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
-import {routes} from './auth.routing';
-import {StoreModule} from '@ngrx/store';
-import {EffectsModule} from '@ngrx/effects';
-import {userReducer} from './store/auth.reducer';
-import {UserEffects} from './store/auth.effect';
-import {UserService} from '../../services/user.service';
+import { routes } from './auth.routing';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { userReducer } from './store/auth.reducer';
+import { UserEffects } from './store/auth.effect';
+import { UserService } from '../../services/user.service';
+import { AuthGuard } from './auth.guard';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptorService } from './auth.interceptor.service';
 
 @NgModule({
   declarations: [RegisterComponent, LoginComponent],
@@ -18,7 +21,11 @@ import {UserService} from '../../services/user.service';
     StoreModule.forFeature('auth', userReducer), EffectsModule.forFeature([UserEffects])],
   exports: [RegisterComponent, LoginComponent],
   providers: [
-    UserService
+    UserService, AuthGuard, {
+    provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    }
   ],
 })
 

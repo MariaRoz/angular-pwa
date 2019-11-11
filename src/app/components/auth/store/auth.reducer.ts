@@ -1,30 +1,43 @@
 import { AuthActions, AuthTypes } from './auth.action';
-import { User } from '../../../models/user.interface';
 
 export interface UserState {
-  user: User[];
+  token: string;
+  username: string;
+  authError: string;
 }
 
 export const initialState: UserState = {
-  user: []
+  token: null,
+  username: null,
+  authError: null,
 };
 
-export function userReducer( state = initialState, action: AuthActions) {
-  // switch (action.type) {
-  //   case AuthTypes.LOGIN_SUCCESS:
-  //     return {
-  //       ...state,
-  //       user: action.payload.data
-  //     }
-  //   case AuthTypes.LOGOUT:
-  //     return {
-  //       ...state,
-  //       user: null,
-  //     };
-  //   default: {
-  //     return state;
-  //   }
-  // }
+export function userReducer( state = initialState, action: AuthActions)  {
+  switch (action.type) {
+    case AuthTypes.AUTHENTICATE_SUCCESS:
+      return {
+        ...state,
+        authError: null,
+        token : action.payload.token,
+        username: action.payload.username
+      }
+    case AuthTypes.AUTHENTICATE_FAIL:
+      return {
+        ...state,
+        token: null,
+        username: null,
+        authError: action.payload.error,
+      };
+    case AuthTypes.LOGOUT:
+      return {
+        ...state,
+        token: null,
+        username: null,
+      };
+    default: {
+      return state;
+    }
+  }
 }
 
-export const geUser = (state: UserState) => state.user;
+export const getUser = (state: UserState) => state.token;
