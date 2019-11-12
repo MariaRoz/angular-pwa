@@ -1,32 +1,29 @@
 import { AuthActions, AuthTypes } from './auth.action';
 
-export interface UserState {
+export interface AuthState {
   token: string;
   username: string;
   authError: string;
 }
 
-export const initialState: UserState = {
+export const initialState: AuthState = {
   token: null,
   username: null,
   authError: null,
 };
 
-export function userReducer( state = initialState, action: AuthActions)  {
+export function authReducer( state = initialState, action: AuthActions): AuthState  {
   switch (action.type) {
     case AuthTypes.AUTHENTICATE_SUCCESS:
       return {
         ...state,
         authError: null,
-        token : action.payload.token,
         username: action.payload.username
-      }
+      };
     case AuthTypes.AUTHENTICATE_FAIL:
       return {
         ...state,
-        token: null,
-        username: null,
-        authError: action.payload.error,
+        authError: action.payload.errorMsg,
       };
     case AuthTypes.LOGOUT:
       return {
@@ -34,10 +31,13 @@ export function userReducer( state = initialState, action: AuthActions)  {
         token: null,
         username: null,
       };
+      case AuthTypes.GET_TOKEN:
+        return {
+          ...state,
+          token: action.payload.token
+        };
     default: {
       return state;
     }
   }
 }
-
-export const getUser = (state: UserState) => state.token;

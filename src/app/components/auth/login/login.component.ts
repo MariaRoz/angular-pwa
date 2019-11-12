@@ -3,8 +3,7 @@ import { NgForm } from '@angular/forms';
 import { LoginStart } from '../store/auth.action';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../../store';
-import { selectAuth } from '../store/auth.selector';
-import { map } from 'rxjs/operators';
+import { selectAuthError } from '../store/auth.selector';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -28,8 +27,7 @@ export class LoginComponent implements OnInit {
 
     this.store.dispatch(new LoginStart({ email, password }));
 
-    this.errorMessage = this.store.select(selectAuth).pipe(
-      map(data => data.authError));
+    this.errorMessage = this.store.select(selectAuthError);
 
     form.reset();
   }

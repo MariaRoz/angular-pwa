@@ -1,30 +1,23 @@
-import {Injectable} from '@angular/core';
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest} from '@angular/common/http';
-import {Store} from '@ngrx/store';
-import * as fromApp from '../../store';
-import {exhaustMap, map, take} from 'rxjs/operators';
-import {Observable} from 'rxjs';
-import {selectAuth} from './store/auth.selector';
+import { Injectable, Injector } from '@angular/core';
+import {
+  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest
+} from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptorService implements HttpInterceptor {
-  constructor(
-    private store: Store<fromApp.AppState>,
-  ) {}
-
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return this.store.select(selectAuth).pipe(
-      take(1),
-      exhaustMap(data => {
-        if (!data.token) {
-          return next.handle(req);
-        }
-        const modifiedReq = req.clone({
-          params: new HttpParams().set('auth', JSON.stringify(data.token)),
-        });
-        return next.handle(modifiedReq);
-      }),
-    );
+  private authService: AuthService;
+  constructor(private injector: Injector) {}
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    this.authService = this.injector.get(AuthService);
+    const token: string = this.authService.getToken();
+    request = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    return next.handle(request);
   }
 }
-

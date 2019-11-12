@@ -3,8 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../../store';
 import { SingUpStart } from '../store/auth.action';
-import { selectAuth } from '../store/auth.selector';
-import { map } from 'rxjs/operators';
+import { selectAuthError } from '../store/auth.selector';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -28,9 +27,7 @@ export class RegisterComponent implements OnInit {
     const password = form.value.password;
     this.store.dispatch(new SingUpStart({ email, password }));
 
-    this.errorMessage = this.store.select(selectAuth).pipe(
-      map(data => data.authError)
-    );
+    this.errorMessage = this.store.select(selectAuthError);
 
     form.reset();
   }

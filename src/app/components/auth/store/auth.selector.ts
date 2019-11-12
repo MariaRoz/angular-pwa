@@ -3,7 +3,7 @@ import { createSelector } from '@ngrx/store';
 
 export const selectAuthFeature = (state: AppState) => state.auth;
 
-export const  selectAuth: any = createSelector(
+export const  selectAuthError: any = createSelector(
   selectAuthFeature,
-  (state) => state
+  (state) => state.authError
 );
