@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
+import {catchError, map, mergeMap, switchMap, take, tap} from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as AuthActions from './auth.action';
 import { AuthService } from '../../../services/auth.service';
@@ -10,17 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 
 const handleError = (err: HttpErrorResponse) => {
-  let errorMessage = err.statusText;
-
-  switch (err.status) {
-    case 401:
-      errorMessage = 'This password or email is not correct';
-      break;
-    case 403:
-      errorMessage = 'This username already exist.';
-      break;
-  }
-
+  const errorMessage = err.error.message || err.statusText;
   return of(new AuthActions.AuthenticateFail({errorMsg: errorMessage}));
 };
 
@@ -28,7 +18,7 @@ const handleError = (err: HttpErrorResponse) => {
 export class AuthEffects {
   constructor(
     private actions: Actions,
-    private userService: AuthService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
@@ -36,10 +26,10 @@ export class AuthEffects {
   authSingup$ = this.actions.pipe(
     ofType(AuthActions.AuthTypes.SIGNUP_START),
     switchMap((singupAction: AuthActions.SingUpStart) => {
-      return this.userService.registerUser(singupAction.payload.email, singupAction.payload.password).pipe(
+      return this.authService.registerUser(singupAction.payload.email, singupAction.payload.password).pipe(
         mergeMap(data => {
           return [new AuthActions.AuthenticateSuccess({ username: data.username, redirect: true }),
-            new AuthActions.GetToken({token: data.access_token})]; }),
+            new AuthActions.SetToken({token: data.access_token})]; }),
         catchError(err => {
             return handleError(err);
           }
@@ -51,10 +41,10 @@ export class AuthEffects {
   authLogin$ = this.actions.pipe(
     ofType(AuthActions.AuthTypes.LOGIN_START),
     switchMap((loginStart: AuthActions.LoginStart) => {
-      return this.userService.loginUser(loginStart.payload.email, loginStart.payload.password).pipe(
+      return this.authService.loginUser(loginStart.payload.email, loginStart.payload.password).pipe(
         mergeMap(data => {
           return [new AuthActions.AuthenticateSuccess({ username: data.username, redirect: true }),
-            new AuthActions.GetToken({token: data.access_token})]; }),
+            new AuthActions.SetToken({token: data.access_token})]; }),
         catchError(err => {
           return handleError(err);
         }
@@ -62,16 +52,12 @@ export class AuthEffects {
     })
   );
 
-  @Effect()
-  getToken$ = this.actions.pipe(
-    ofType(AuthActions.AuthTypes.GET_TOKEN),
-    map((getTokenAction: AuthActions.GetToken) => {
-      this.userService.setToken(getTokenAction.payload.token);
-      return new AuthActions.GetTokenSuccess();
-    }),
-    catchError(() =>
-        of(new AuthActions.GetTokenFail())
-    )
+  @Effect({ dispatch: false })
+  setToken$ = this.actions.pipe(
+    ofType(AuthActions.AuthTypes.SET_TOKEN),
+    map((getTokenAction: AuthActions.SetToken) => {
+      this.authService.setToken(getTokenAction.payload.token);
+    })
   );
 
   @Effect({ dispatch: false })
@@ -84,12 +70,20 @@ export class AuthEffects {
     })
   );
 
-  @Effect({ dispatch: false })
+  @Effect({dispatch: false})
+  resetToken$ = this.actions.pipe(
+    ofType(AuthActions.AuthTypes.RESET_TOKEN),
+    take(1),
+    map(() => {
+       this.authService.removeToken();
+       return this.router.navigate(['register']);
+    })
+  )
+
+  @Effect()
   authLogout$ = this.actions.pipe(
     ofType(AuthActions.AuthTypes.LOGOUT),
-    tap(() => {
-      localStorage.removeItem('token');
-      return this.router.navigate(['/register']);
+    map(() => { return new AuthActions.ResetToken();
     }),
   );
 }

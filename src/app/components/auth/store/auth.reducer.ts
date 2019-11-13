@@ -28,13 +28,17 @@ export function authReducer( state = initialState, action: AuthActions): AuthSta
     case AuthTypes.LOGOUT:
       return {
         ...state,
-        token: null,
         username: null,
       };
-      case AuthTypes.GET_TOKEN:
+      case AuthTypes.SET_TOKEN:
         return {
           ...state,
           token: action.payload.token
+        };
+      case AuthTypes.RESET_TOKEN:
+        return {
+          ...state,
+          token: null,
         };
     default: {
       return state;

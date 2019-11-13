@@ -6,9 +6,8 @@ export const enum AuthTypes {
   AUTHENTICATE_FAIL = '[Auth] Fail',
   LOGIN_START = '[Auth] Login Start',
   LOGOUT = '[Auth] Logout',
-  GET_TOKEN = '[Auth] Token',
-  GET_TOKEN_SUCCESS = '[Auth] Token Success',
-  GET_TOKEN_FAIL = '[Auth] Token Fail',
+  SET_TOKEN = '[Auth] Set Token',
+  RESET_TOKEN = '[Auth] Reset Token',
 }
 
 export class SingUpStart implements Action {
@@ -39,19 +38,15 @@ export class LoginStart implements Action {
   constructor(public payload: {email: string, password: string}) {}
 }
 
-export class GetToken implements Action {
-  readonly type = AuthTypes.GET_TOKEN;
+export class SetToken implements Action {
+  readonly type = AuthTypes.SET_TOKEN;
 
   constructor(public payload: { token: string }) {}
 }
 
-export class GetTokenSuccess implements Action {
-  readonly type = AuthTypes.GET_TOKEN_SUCCESS;
+export class ResetToken implements Action {
+  readonly type = AuthTypes.RESET_TOKEN;
 
-}
-
-export class GetTokenFail implements Action {
-  readonly type = AuthTypes.GET_TOKEN_FAIL;
 }
 
 export type AuthActions =
@@ -60,9 +55,8 @@ export type AuthActions =
   | AuthenticateFail
   | Logout
   | LoginStart
-  | GetToken
-  | GetTokenSuccess
-  | GetTokenFail;
+  | SetToken
+  | ResetToken;
 
 
 
