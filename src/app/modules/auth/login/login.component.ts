@@ -11,14 +11,12 @@ import { Observable } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrls: ['../auth.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   errorMessage: Observable<string>;
 
   constructor(private store: Store<fromApp.AppState>) { }
 
-  ngOnInit() {
-  }
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
     if (!form.valid) {
       return;
     }

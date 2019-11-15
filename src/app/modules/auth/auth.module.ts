@@ -10,7 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { authReducer } from './store/auth.reducer';
 import { AuthEffects } from './store/auth.effect';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptorService } from './auth.interceptor.service';

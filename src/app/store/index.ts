@@ -2,8 +2,8 @@ import {
   ActionReducerMap
 } from '@ngrx/store';
 
-import { chatReducer, ChatState } from '../components/chat/store/chat.reducer';
-import { authReducer, AuthState } from '../components/auth/store/auth.reducer';
+import { chatReducer, ChatState } from '../modules/chat/store/chat.reducer';
+import { authReducer, AuthState } from '../modules/auth/store/auth.reducer';
 
 export interface AppState {
   chat: ChatState;

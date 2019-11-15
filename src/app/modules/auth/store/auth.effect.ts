@@ -3,7 +3,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import {catchError, map, mergeMap, switchMap, take, tap} from 'rxjs/operators';
 import { of } from 'rxjs';
 import * as AuthActions from './auth.action';
-import { AuthService } from '../../../services/auth.service';
+import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 
