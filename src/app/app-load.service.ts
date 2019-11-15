@@ -8,7 +8,7 @@ import { SetToken } from './components/auth/store/auth.action';
 export class AppLoadService {
   constructor(private store: Store<fromApp.AppState>, private authService: AuthService) {
   }
-  Init(): Promise<void> {
+  init(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       const token = this.authService.getToken();
       if (token && token !== 'null') {
