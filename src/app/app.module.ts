@@ -10,11 +10,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { AppReducer } from './store';
-import { ChatModule } from './components/chat/chat.module';
+import { ChatModule } from './modules/chat/chat.module';
 import { storeFreeze } from 'ngrx-store-freeze';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
-import { AuthModule } from './components/auth/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 import { AppLoadService } from './app-load.service';
 import { initializeApp } from './initialize-app';
 

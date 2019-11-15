@@ -2,7 +2,7 @@ import { cold, hot } from 'jasmine-marbles';
 import { ChatEffects } from './chat.effects';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ChatService } from '../../../services/chat.service';
+import { ChatService } from '../chat.service';
 import { TestHotObservable } from 'jasmine-marbles/src/test-observables';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Message } from '../../../models/message.interface';

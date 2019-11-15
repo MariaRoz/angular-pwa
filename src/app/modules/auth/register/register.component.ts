@@ -11,15 +11,12 @@ import { Observable } from 'rxjs';
   templateUrl: './register.component.html',
   styleUrls: ['../auth.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent {
   errorMessage: Observable<string>;
 
   constructor(private store: Store<fromApp.AppState>) { }
 
-  ngOnInit() {
-  }
-
-  onSubmit(form: NgForm) {
+  onSubmit(form: NgForm): void {
     if (!form.valid) {
       return;
     }

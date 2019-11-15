@@ -12,7 +12,7 @@ import { of, throwError } from 'rxjs';
 import { EffectsModule } from '@ngrx/effects';
 import { ChatEffects } from '../store/chat.effects';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ChatService } from '../../../services/chat.service';
+import { ChatService } from '../chat.service';
 import { Message } from '../../../models/message.interface';
 
 

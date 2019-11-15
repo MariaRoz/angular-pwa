@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from './store';
-import { AuthService } from './services/auth.service';
-import { SetToken } from './components/auth/store/auth.action';
+import { AuthService } from './modules/auth/auth.service';
+import { SetToken } from './modules/auth/store/auth.action';
 
 @Injectable()
 export class AppLoadService {

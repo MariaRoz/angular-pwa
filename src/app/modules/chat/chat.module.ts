@@ -8,7 +8,7 @@ import { ChatEffects } from './store/chat.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { chatReducer } from './store/chat.reducer';
 import { StoreModule } from '@ngrx/store';
-import {ChatService} from '../../services/chat.service';
+import {ChatService} from './chat.service';
 import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
