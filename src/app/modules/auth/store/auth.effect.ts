@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import {catchError, map, mergeMap, switchMap, take, tap} from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -19,7 +19,8 @@ export class AuthEffects {
   constructor(
     private actions: Actions,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private zone: NgZone,
   ) {}
 
   @Effect()
@@ -65,8 +66,10 @@ export class AuthEffects {
     ofType(AuthActions.AuthTypes.AUTHENTICATE_SUCCESS),
     tap((authSuccessAction: AuthActions.AuthenticateSuccess) => {
       if (authSuccessAction.payload.redirect) {
+        this.zone.run(() => {
           return this.router.navigate(['chat']);
-        }
+        });
+      }
     })
   );
 
@@ -76,7 +79,9 @@ export class AuthEffects {
     take(1),
     map(() => {
        this.authService.removeToken();
-       return this.router.navigate(['register']);
+       this.zone.run(() => {
+         return this.router.navigate(['register']);
+       });
     })
   )
 
