@@ -46,6 +46,10 @@ describe('AuthEffect', () => {
     mockedAuthService = TestBed.get(AuthService);
     effects = TestBed.get(AuthEffects);
     router = TestBed.get(Router);
+
+    spyOn(router, 'navigate').and.callFake(async () => {
+      return true;
+    });
   });
 
   it('should be created', () => {
@@ -111,7 +115,7 @@ describe('AuthEffect', () => {
   it('should redirect if service success', () => {
     actions$ = hot('-a-', {a: new AuthActions.AuthenticateSuccess({username: '', redirect: true})});
     effects.authSuccess$.subscribe(() => {
-      expect(router.navigate).toHaveBeenCalledWith(['/chat']);
+      expect(router.navigate).toHaveBeenCalledWith(['chat']);
     });
   });
 
@@ -127,6 +131,7 @@ describe('AuthEffect', () => {
     actions$ = cold('-a-', { a: new AuthActions.ResetToken()});
     effects.resetToken$.subscribe(() => {
       expect(mockedAuthService.removeToken).toHaveBeenCalled();
+      expect(router.navigate).toHaveBeenCalledWith(['register']);
     });
   });
 });
