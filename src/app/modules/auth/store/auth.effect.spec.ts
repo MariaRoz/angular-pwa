@@ -1,18 +1,15 @@
-import {TestHotObservable} from 'jasmine-marbles/src/test-observables';
-import {TestBed} from '@angular/core/testing';
-import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {StoreModule} from '@ngrx/store';
-import {provideMockActions} from '@ngrx/effects/testing';
-import {AuthEffects} from './auth.effect';
-import {AuthService} from '../auth.service';
-import {RouterTestingModule} from '@angular/router/testing';
-import {of} from 'rxjs';
-import * as ChatActions from '../../chat/store/chat.actions';
-import {cold, hot} from 'jasmine-marbles';
+import { TestHotObservable } from 'jasmine-marbles/src/test-observables';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { StoreModule } from '@ngrx/store';
+import { provideMockActions } from '@ngrx/effects/testing';
+import { AuthEffects } from './auth.effect';
+import { AuthService } from '../auth.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of } from 'rxjs';
+import { cold, hot } from 'jasmine-marbles';
 import * as AuthActions from './auth.action';
-import {Effect, ofType} from '@ngrx/effects';
-import {map, tap} from 'rxjs/operators';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 const user = {
   id: 1,
@@ -27,10 +24,10 @@ describe('AuthEffect', () => {
   let actions$: TestHotObservable;
   let effects: AuthEffects;
   let mockedAuthService: jasmine.SpyObj<AuthService>;
-  let router = TestBed.get(Router);
+  let router: Router;
 
 
-  const service = jasmine.createSpyObj('AuthService', ['registerUser', 'loginUser', 'setToken' ]);
+  const service = jasmine.createSpyObj('AuthService', ['registerUser', 'loginUser', 'setToken', 'removeToken' ]);
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -48,6 +45,7 @@ describe('AuthEffect', () => {
     });
     mockedAuthService = TestBed.get(AuthService);
     effects = TestBed.get(AuthEffects);
+    router = TestBed.get(Router);
   });
 
   it('should be created', () => {
@@ -102,25 +100,34 @@ describe('AuthEffect', () => {
     expect(effects.authLogin$).toBeObservable(expected);
   });
 
-  // it('should set token', () => {
-  //   mockedAuthService.setToken.and.returnValue();
-  //   actions$ = cold('-a-', { a: new AuthActions.SetToken({token: 'token'}) });
-  //   // expect(mockedAuthService.setToken).toHaveBeenCalledWith({token: 'token'});
-  //   // effects.setToken$.subscribe(() => {
-  //   //   expect(mockedAuthService.setToken).toHaveBeenCalledWith('');
-  //   // });
-  //   // expect(effects.setToken$).toBeObservable(actions$);
-  // })
+  it('should set token', () => {
+    mockedAuthService.setToken.and.returnValue();
+    actions$ = cold('-a-', { a: new AuthActions.SetToken({token: 'token'}) });
+    effects.setToken$.subscribe(() => {
+      expect(mockedAuthService.setToken).toHaveBeenCalledWith('token');
+    });
+  });
+
   it('should redirect if service success', () => {
-    actions$ = hot('-a-', {a: new AuthActions.AuthenticateSuccess({username: '', redirect: true})};
-    expect(router.navigate).toHaveBeenCalledWith(['/chat']);
-  })
+    actions$ = hot('-a-', {a: new AuthActions.AuthenticateSuccess({username: '', redirect: true})});
+    effects.authSuccess$.subscribe(() => {
+      expect(router.navigate).toHaveBeenCalledWith(['/chat']);
+    });
+  });
 
   it('should logout', () => {
     actions$ = hot('-a-', {a: new AuthActions.Logout()});
     const expected = cold('-b-', {b: new AuthActions.ResetToken()});
 
     expect(effects.authLogout$).toBeObservable(expected);
+  });
+
+  it('should reset token', () => {
+    mockedAuthService.removeToken.and.returnValue();
+    actions$ = cold('-a-', { a: new AuthActions.ResetToken()});
+    effects.resetToken$.subscribe(() => {
+      expect(mockedAuthService.removeToken).toHaveBeenCalled();
+    });
   });
 });
 
