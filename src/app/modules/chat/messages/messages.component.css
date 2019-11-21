@@ -25,3 +25,8 @@ mat-card-content {
   font-size: 10px;
   color: #aaa;
 }
+.author {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #ff4081;
+}
