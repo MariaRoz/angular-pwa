@@ -5,6 +5,9 @@ import * as fromApp from '../../../store';
 import { LoadMessagesBegin, StartSendingMessage } from '../store/chat.actions';
 import { Observable, of } from 'rxjs';
 import { selectMessages } from '../store/chat.selectors';
+import { selectCurrentUser } from '../../auth/store/auth.selector';
+import { GetCurrentUser } from '../../auth/store/auth.action';
+import { User } from '../../../models/user.interface';
 
 
 @Component({
@@ -17,6 +20,7 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
   isLoading = false;
 
   public messages$: Observable<Message[]> = of([]);
+  public user$: Observable<User> = of();
 
   constructor(private store: Store<fromApp.AppState>) {}
 
@@ -27,7 +31,10 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
       select(selectMessages)
     );
 
+    this.user$ = this.store.select(selectCurrentUser);
+
     this.store.dispatch(new LoadMessagesBegin());
+    this.store.dispatch(new GetCurrentUser());
   }
 
   ngAfterViewChecked(): void {

@@ -8,6 +8,7 @@ export const enum AuthTypes {
   LOGOUT = '[Auth] Logout',
   SET_TOKEN = '[Auth] Set Token',
   RESET_TOKEN = '[Auth] Reset Token',
+  GET_CURRENT_USER = '[User] Current User'
 }
 
 export class SingUpStart implements Action {
@@ -46,7 +47,10 @@ export class SetToken implements Action {
 
 export class ResetToken implements Action {
   readonly type = AuthTypes.RESET_TOKEN;
+}
 
+export class GetCurrentUser {
+  readonly type = AuthTypes.GET_CURRENT_USER;
 }
 
 export type AuthActions =
@@ -56,7 +60,8 @@ export type AuthActions =
   | Logout
   | LoginStart
   | SetToken
-  | ResetToken;
+  | ResetToken
+  | GetCurrentUser;
 
 
 
