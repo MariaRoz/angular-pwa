@@ -10,6 +10,7 @@
       <p *ngIf="(messages$ | async)?.length === 0">No messages yet.</p>
       <div class="chat-container__messages">
         <mat-card-content *ngFor=" let message of messages$ | async">
+          <div class="author">{{message.author.username}}</div>
           {{message.message}}
           <span class="time">{{message.createdAt | date: "dd-MM-yyyy hh:mm:ss" }} </span>
         </mat-card-content>
