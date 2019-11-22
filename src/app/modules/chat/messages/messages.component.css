@@ -19,6 +19,9 @@ mat-card-content {
 }
 .chat-container__messages {
   word-wrap: break-word;
+  padding: 30px 30px 20px;
+  overflow-y: scroll;
+  height: 600px;
 }
 .time {
   float: right;
@@ -29,4 +32,22 @@ mat-card-content {
   font-weight: bold;
   margin-bottom: 5px;
   color: #ff4081;
+}
+.chat-container__right {
+  display: grid;
+  grid-template-rows: 600px 100px;
+}
+.chat-container__button {
+  display: grid;
+  grid-template-columns: 500px 100px;
+  justify-content: end;
+  margin-right: 50px;
+}
+.chat-container__username {
+  position: fixed;
+  right: 100px;
+  color: #111111;
+}
+button {
+  height: 50px;
 }

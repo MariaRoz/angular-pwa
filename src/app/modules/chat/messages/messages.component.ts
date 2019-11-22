@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Message } from '../../../models/message.interface';
 import {select, Store} from '@ngrx/store';
 import * as fromApp from '../../../store';
@@ -9,12 +9,14 @@ import { selectCurrentUser } from '../../auth/store/auth.selector';
 import { GetCurrentUser } from '../../auth/store/auth.action';
 import { User } from '../../../models/user.interface';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.css']
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, AfterViewChecked {
+  @ViewChild('scroll', {static: false}) private myScrollContainer: ElementRef;
   isLoading = false;
 
   public messages$: Observable<Message[]> = of([]);
@@ -33,7 +35,15 @@ export class MessagesComponent implements OnInit {
     this.store.dispatch(new GetCurrentUser());
   }
 
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
+  }
+
   addMessage(message): void {
     this.store.dispatch(new StartSendingMessage({message}));
+  }
+
+  scrollToBottom(): void {
+    this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
   }
 }
