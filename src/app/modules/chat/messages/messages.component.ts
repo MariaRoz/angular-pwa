@@ -1,4 +1,4 @@
-import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterContentInit, AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Message } from '../../../models/message.interface';
 import {select, Store} from '@ngrx/store';
 import * as fromApp from '../../../store';
@@ -25,8 +25,6 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
   constructor(private store: Store<fromApp.AppState>) {}
 
   ngOnInit(): void {
-    this.scrollToBottom();
-
     this.messages$ = this.store.pipe(
       select(selectMessages)
     );
@@ -46,8 +44,6 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
   }
 
   scrollToBottom(): void {
-    try {
-      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) { }
+    this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
   }
 }
