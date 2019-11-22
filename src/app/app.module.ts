@@ -18,6 +18,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AppLoadService } from './app-load.service';
 import { initializeApp } from './initialize-app';
 
+
 @NgModule({
   declarations: [
     AppComponent,

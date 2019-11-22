@@ -10,12 +10,16 @@ import { chatReducer } from './store/chat.reducer';
 import { StoreModule } from '@ngrx/store';
 import {ChatService} from './chat.service';
 import {HttpClientModule} from '@angular/common/http';
+import {SocketIoConfig, SocketIoModule} from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'http://localhost:3000', options: {}};
 
 @NgModule({
   declarations: [
     MessagesComponent
   ],
   imports: [
+    SocketIoModule.forRoot(config),
     BrowserModule,
     RouterModule.forChild(routes),
     StoreModule.forFeature('chat', chatReducer),
