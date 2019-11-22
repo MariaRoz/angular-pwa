@@ -23,8 +23,12 @@ export class AuthService {
     return localStorage.setItem('token', token);
   }
 
-   removeToken(): void {
+  removeToken(): void {
     localStorage.removeItem('token');
+  }
+
+  getCurrentUser(): Observable<User> {
+    return this.http.get<User>('http://localhost:3000/auth/user');
   }
 
 }

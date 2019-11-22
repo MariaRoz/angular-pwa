@@ -86,4 +86,17 @@ export class AuthEffects {
     map(() => { return new AuthActions.ResetToken();
     }),
   );
+
+  @Effect()
+  getCurrentUser$ = this.actions.pipe(
+    ofType(AuthActions.AuthTypes.GET_CURRENT_USER),
+    switchMap(() => {
+      return this.authService.getCurrentUser();
+    }),
+    map((data) => {
+      return new AuthActions.AuthenticateSuccess({ username: data.username, redirect: false });
+    }),
+    catchError(err => handleError(err))
+  );
+
 }

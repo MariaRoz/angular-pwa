@@ -13,3 +13,8 @@ export const selectAuthToken: any = createSelector(
   selectAuthFeature,
   (state) => state.token
 );
+
+export const selectCurrentUser: any = createSelector(
+  selectAuthFeature,
+  (state) => state.username
+);
