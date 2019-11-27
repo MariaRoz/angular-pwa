@@ -9,6 +9,7 @@ import { Message } from '../../../models/message.interface';
 import {of, throwError} from 'rxjs';
 import * as ChatActions from './chat.actions';
 import { StoreModule } from '@ngrx/store';
+import { User } from '../../../models/user.interface';
 
 describe('ChatEffects', () => {
   let actions$: TestHotObservable;
@@ -16,7 +17,8 @@ describe('ChatEffects', () => {
   let effects: ChatEffects;
 
   const service = jasmine.createSpyObj('ChatService', ['getMessages', 'sendMessage' ]);
-  const message: Message =  { id: 1, message: 'test', createdAt: new Date() };
+  const user: User = { id: 1, username: 'Test', password: '', updatedAt: new Date(), createdAt: new Date(), access_token: 'xx' }
+  const message: Message =  { id: 1, message: 'test', createdAt: new Date(), author: user };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -63,7 +65,7 @@ describe('ChatEffects', () => {
 
   it('should send message if service return success', () => {
     actions$ = hot('-a---a-', { a: new ChatActions.StartSendingMessage({ message: 'some_text' }) });
-    mockedChatService.sendMessage.and.callFake( (text) => of({id: 1, message: text, createdAt: new Date()}));
+    mockedChatService.sendMessage.and.callFake( (text) => of({id: 1, message: text, createdAt: new Date(), author: user}));
     const expected = cold('-(bc)(bc)-', { b: new ChatActions.MessageSendSuccess(), c: new ChatActions.LoadMessagesBegin()});
 
     expect(effects.sendMessage).toBeObservable(expected);
