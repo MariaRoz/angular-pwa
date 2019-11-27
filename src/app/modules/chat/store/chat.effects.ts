@@ -30,4 +30,13 @@ export class ChatEffects {
     mergeMap(() => [new MessageActions.MessageSendSuccess(), new MessageActions.LoadMessagesBegin()]),
     catchError(error => of(new MessageActions.MessageSendFailure({error})))
   );
+
+  @Effect()
+  updateChat$ = this.actions.pipe(
+    ofType(MessageActions.ActionTypes.ChatUpdated),
+    map(() => {
+      return new MessageActions.LoadMessagesBegin();
+      })
+  );
+
 }
