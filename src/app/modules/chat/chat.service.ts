@@ -17,3 +17,4 @@ export class ChatService {
     return this.http.post<Message>('http://localhost:3000/messages/', { message });
   }
 }
+

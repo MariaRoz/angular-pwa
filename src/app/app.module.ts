@@ -17,6 +17,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { AuthModule } from './modules/auth/auth.module';
 import { AppLoadService } from './app-load.service';
 import { initializeApp } from './initialize-app';
+import { AppEffects } from './store/app.effects';
+import { SocketIoModule } from 'ngx-socket-io';
+
 
 @NgModule({
   declarations: [
@@ -35,7 +38,8 @@ import { initializeApp } from './initialize-app';
       metaReducers: !environment.production ? [storeFreeze] : []
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([AppEffects]),
+    SocketIoModule.forRoot({url: 'http://localhost:3000'}),
   ],
   providers: [
     AppLoadService,
