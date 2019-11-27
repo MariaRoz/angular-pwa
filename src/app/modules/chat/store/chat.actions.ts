@@ -45,7 +45,7 @@ export class LoadMessagesFailure implements Action {
 export class ChatUpdated implements Action {
   readonly type = ActionTypes.ChatUpdated;
 
-  constructor(public data: {action: string, payload?: object}) {}
+  constructor(public payload?: object) {}
 }
 
 export type ChatActions = LoadMessagesBegin | LoadMessagesSuccess | LoadMessagesFailure|

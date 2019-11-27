@@ -18,9 +18,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AppLoadService } from './app-load.service';
 import { initializeApp } from './initialize-app';
 import { AppEffects } from './store/app.effects';
-import { SocketIoConfig, SocketIoModule } from 'ngx-socket-io';
-
-const config: SocketIoConfig = { url: 'http://localhost:3000', options: {}};
+import { SocketIoModule } from 'ngx-socket-io';
 
 
 @NgModule({
@@ -41,7 +39,7 @@ const config: SocketIoConfig = { url: 'http://localhost:3000', options: {}};
     }),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     EffectsModule.forRoot([AppEffects]),
-    SocketIoModule.forRoot(config),
+    SocketIoModule.forRoot({url: 'http://localhost:3000'}),
   ],
   providers: [
     AppLoadService,
