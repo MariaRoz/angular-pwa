@@ -14,17 +14,21 @@ import { ChatEffects } from '../store/chat.effects';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { ChatService } from '../chat.service';
 import { Message } from '../../../models/message.interface';
+import { User } from '../../../models/user.interface';
 
+const user: User = { id: 1, username: 'Test', password: '', updatedAt: new Date(), createdAt: new Date(), access_token: 'xx' }
 
 const MOCKED_MESSAGE_1: Message = {
   id: 1,
   message: 'yeah',
   createdAt: new Date(),
+  author: user
 };
 const MOCKED_MESSAGE_2: Message = {
   id: 2,
   message: 'some text here',
   createdAt: new Date(),
+  author: user
 };
 
 const mockedInitialState: ChatState = {
