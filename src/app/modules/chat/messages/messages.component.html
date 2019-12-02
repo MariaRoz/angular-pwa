@@ -31,7 +31,11 @@
         <button mat-raised-button color="accent" (click)="addMessage(messageInput.value)" type="button">Send</button>
       </div>
       </div>
-      <div class="chat-container__right"></div>
+      <div class="chat-container__right">
+        <p *ngFor="let onlineUser of onlineUsers | async">
+          {{onlineUser}}
+        </p>
+      </div>
       </div>
   </mat-card>
 </div>

@@ -39,4 +39,17 @@ export class ChatEffects {
       })
   );
 
+  @Effect()
+  getOnlineUsers = this.actions.pipe(
+    ofType(MessageActions.ActionTypes.LoadMessagesBegin),
+    switchMap(() => {
+      return this.mesService.getOnlineUsers().pipe(
+        map(data => new MessageActions.GetOnlineUsers({data})),
+        catchError(error =>
+          of(new MessageActions.LoadMessagesFailure({ error }))
+        )
+      );
+    })
+  )
+
 }

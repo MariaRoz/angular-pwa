@@ -7,3 +7,8 @@ export const selectMessages: any = createSelector(
   selectChatFeature,
   (state) => state.messages
 );
+
+export const selectOnlineUsers: any = createSelector(
+  selectChatFeature,
+  (state => state.onlineUsers)
+)

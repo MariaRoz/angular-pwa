@@ -3,10 +3,12 @@ import { Message } from '../../../models/message.interface';
 
 export interface ChatState {
   messages: Message[];
+  onlineUsers: string[];
 }
 
 export const initialState: ChatState = {
   messages: [],
+  onlineUsers: [],
 };
 
 export function chatReducer(
@@ -18,6 +20,12 @@ export function chatReducer(
       return {
         ...state,
         messages: action.payload.data
+      };
+    }
+    case ActionTypes.GetOnlineUsers: {
+      return {
+        ...state,
+        onlineUsers: action.payload.data
       };
     }
     default: {

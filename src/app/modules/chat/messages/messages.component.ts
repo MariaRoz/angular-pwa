@@ -4,7 +4,7 @@ import {select, Store} from '@ngrx/store';
 import * as fromApp from '../../../store';
 import { LoadMessagesBegin, StartSendingMessage } from '../store/chat.actions';
 import { Observable, of } from 'rxjs';
-import { selectMessages } from '../store/chat.selectors';
+import { selectMessages, selectOnlineUsers } from '../store/chat.selectors';
 import { selectCurrentUser } from '../../auth/store/auth.selector';
 import { GetCurrentUser } from '../../auth/store/auth.action';
 import { User } from '../../../models/user.interface';
@@ -21,6 +21,7 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
 
   public messages$: Observable<Message[]> = of([]);
   public user$: Observable<User> = of();
+  public onlineUsers: Observable<string[]> = of([]);
 
   constructor(private store: Store<fromApp.AppState>) {}
 
@@ -30,6 +31,7 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
     );
 
     this.user$ = this.store.select(selectCurrentUser);
+    this.onlineUsers = this.store.select(selectOnlineUsers);
 
     this.store.dispatch(new LoadMessagesBegin());
     this.store.dispatch(new GetCurrentUser());
