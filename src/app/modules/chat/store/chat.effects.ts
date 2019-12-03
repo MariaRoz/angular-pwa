@@ -40,7 +40,7 @@ export class ChatEffects {
   );
 
   @Effect()
-  getOnlineUsers = this.actions.pipe(
+  getOnlineUsers$ = this.actions.pipe(
     ofType(MessageActions.ActionTypes.LoadMessagesBegin),
     switchMap(() => {
       return this.mesService.getOnlineUsers().pipe(
@@ -50,6 +50,6 @@ export class ChatEffects {
         )
       );
     })
-  )
+  );
 
 }
