@@ -33,7 +33,7 @@
       </div>
       <div class="chat-container__right">
         <p *ngFor="let onlineUser of onlineUsers | async">
-          {{onlineUser}}
+          {{onlineUser.author_username}}
         </p>
       </div>
       </div>
