@@ -18,7 +18,7 @@ export class ChatService {
   }
 
   getOnlineUsers(): Observable<string[]> {
-    return this.http.get<string[]>('http://localhost:3000/online');
+    return this.http.get<string[]>('http://localhost:3000/users/online');
   }
 }
 
