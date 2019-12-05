@@ -16,7 +16,7 @@ describe('ChatEffects', () => {
   let mockedChatService: jasmine.SpyObj<ChatService>;
   let effects: ChatEffects;
 
-  const service = jasmine.createSpyObj('ChatService', ['getMessages', 'sendMessage' ]);
+  const service = jasmine.createSpyObj('ChatService', ['getMessages', 'sendMessage', 'getOnlineUsers' ]);
   const user: User = { id: 1, username: 'Test', password: '', updatedAt: new Date(), createdAt: new Date(), access_token: 'xx' }
   const message: Message =  { id: 1, message: 'test', createdAt: new Date(), author: user };
 
@@ -84,6 +84,19 @@ describe('ChatEffects', () => {
     const expected = cold('-(b|)-', {b: completion}, err);
 
     expect(effects.sendMessage).toBeObservable(expected);
+  });
+
+  it('should return array of online users', () => {
+    const usersOnline = ['test1', 'test2'];
+    mockedChatService.getOnlineUsers.and.returnValue(of(usersOnline));
+
+    const completion = new ChatActions.GetOnlineUsers({data: usersOnline})
+    actions$ = hot('-a-', {a: new ChatActions.LoadMessagesBegin()});
+
+    const expected = cold('-b-', {b: completion });
+
+    expect(effects.getOnlineUsers$).toBeObservable(expected);
+    expect(mockedChatService.getOnlineUsers).toHaveBeenCalled();
   });
 
 });

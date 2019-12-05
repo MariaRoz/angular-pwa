@@ -33,9 +33,9 @@ mat-card-content {
   margin-bottom: 5px;
   color: #ff4081;
 }
-.chat-container__right {
-  display: grid;
-  grid-template-rows: 600px 100px;
+.chat-container__right p {
+  color: #00FF00;
+  text-align: center;
 }
 .chat-container__button {
   display: grid;

@@ -35,7 +35,8 @@ const mockedInitialState: ChatState = {
   ...chatReducer,
   messages: [
     MOCKED_MESSAGE_1
-  ]
+  ],
+  onlineUsers: [],
 };
 
 const RECEIVED_MESSAGES: Message[] = [
