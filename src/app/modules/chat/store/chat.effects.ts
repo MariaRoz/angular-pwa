@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as MessageActions from './chat.actions';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import {map, switchMap, catchError, mergeMap} from 'rxjs/operators';
-import { of } from 'rxjs';
+import { map, switchMap, catchError, mergeMap, mapTo } from 'rxjs/operators';
+import { fromEvent, merge, of } from 'rxjs';
 
 import { ChatService } from '../chat.service';
 
@@ -49,6 +49,21 @@ export class ChatEffects {
           of(new MessageActions.LoadMessagesFailure({ error }))
         )
       );
+    })
+  );
+
+  @Effect()
+  startOnlineOfflineCheck$ = this.actions.pipe(
+    ofType(MessageActions.ActionTypes.StartOnlineOfflineCheck),
+    switchMap(() => {
+      return merge(
+        of(navigator.onLine),
+        fromEvent(window, 'online').pipe(mapTo(true)),
+        fromEvent(window, 'offline').pipe(mapTo(false))
+      );
+    }),
+    map(isOnline => {
+      return new MessageActions.SetIsOnline(isOnline);
     })
   );
 

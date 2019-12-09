@@ -13,3 +13,8 @@ export const selectOnlineUsers: MemoizedSelector<AppState, string[]> = createSel
   selectChatFeature,
   (state => state.onlineUsers)
 );
+
+export const selectOnlineOfflineCheck: MemoizedSelector<AppState, boolean> = createSelector(
+  selectChatFeature,
+  (state => state.isOnline)
+);
