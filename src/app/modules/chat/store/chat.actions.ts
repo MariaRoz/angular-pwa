@@ -10,6 +10,7 @@ export enum ActionTypes {
   MessageSendFailure = '[Messages] Message send failure',
   ChatUpdated = '[Chat] Chat Updated',
   GetOnlineUsers = '[Online] Get online users',
+  SendOfflineMessages = '[Offline] Send offline messages',
 }
 
 export class StartSendingMessage implements Action {
@@ -55,5 +56,11 @@ export class GetOnlineUsers implements Action {
   constructor(public payload: { data: string[] }) {}
 }
 
+export class SendOfflineMessages implements Action {
+  readonly type = ActionTypes.SendOfflineMessages;
+
+  constructor(public payload: object[]) {}
+}
+
 export type ChatActions = LoadMessagesBegin | LoadMessagesSuccess | LoadMessagesFailure|
-  StartSendingMessage | MessageSendSuccess | MessageSendFailure | ChatUpdated | GetOnlineUsers;
+  StartSendingMessage | MessageSendSuccess | MessageSendFailure | ChatUpdated | GetOnlineUsers | SendOfflineMessages;

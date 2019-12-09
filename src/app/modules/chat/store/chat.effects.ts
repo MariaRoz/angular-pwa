@@ -52,4 +52,12 @@ export class ChatEffects {
     })
   );
 
+  @Effect()
+  sendOfflineMessages$ = this.actions.pipe(
+    ofType(MessageActions.ActionTypes.SendOfflineMessages),
+    switchMap((sendAction: MessageActions.SendOfflineMessages) => this.mesService.sendOfflineMessages(sendAction.payload)),
+    mergeMap(() => [new MessageActions.MessageSendSuccess(), new MessageActions.LoadMessagesBegin()]),
+    catchError(error => of(new MessageActions.MessageSendFailure({error})))
+  );
+
 }
