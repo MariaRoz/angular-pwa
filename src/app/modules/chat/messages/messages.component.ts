@@ -53,7 +53,7 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
     this.scrollToBottom();
   }
 
-  addMessage(message): void {
+  addMessage(message: string): void {
     navigator.onLine ? this.store.dispatch(new StartSendingMessage({message})) :
       this.offlineMessages.push({message, createdAt: new Date()});
   }
