@@ -18,3 +18,9 @@ export const selectOnlineOfflineCheck: MemoizedSelector<AppState, boolean> = cre
   selectChatFeature,
   (state => state.isOnline)
 );
+
+export const selectOfflineMessages: MemoizedSelector<AppState, object> = createSelector(
+  selectChatFeature,
+  (state => ({ messages: state.offlineMessages, isOnline: state.isOnline}))
+
+);

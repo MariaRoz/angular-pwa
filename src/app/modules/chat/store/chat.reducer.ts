@@ -5,12 +5,14 @@ export interface ChatState {
   messages: Message[];
   onlineUsers: string[];
   isOnline: boolean;
+  offlineMessages: object[];
 }
 
 export const initialState: ChatState = {
   messages: [],
   onlineUsers: [],
-  isOnline: navigator.onLine
+  isOnline: navigator.onLine,
+  offlineMessages: [],
 };
 
 export function chatReducer(
@@ -35,6 +37,16 @@ export function chatReducer(
         ...state,
         isOnline: action.payload
       };
+      case ActionTypes.OfflineMessages:
+        return {
+          ...state,
+          offlineMessages: [...state.offlineMessages, action.payload]
+        };
+        case ActionTypes.ResetOfflineMessages:
+          return {
+            ...state,
+            offlineMessages: []
+          }
     default: {
       return state;
     }

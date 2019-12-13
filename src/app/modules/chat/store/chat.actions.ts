@@ -13,6 +13,8 @@ export enum ActionTypes {
   StartOnlineOfflineCheck = '[Network] StartOnlineOfflineCheck',
   SetIsOnline = '[Network] SetIsOnline',
   SendOfflineMessages = '[Offline] Send offline messages',
+  OfflineMessages = '[Messages] Offline messages',
+  ResetOfflineMessages = '[Messages] Reset offline messages'
 }
 
 export class StartSendingMessage implements Action {
@@ -74,5 +76,16 @@ export class SetIsOnline implements Action {
   constructor(public payload: boolean) {}
 }
 
+export class OfflineMessages implements Action {
+  readonly type = ActionTypes.OfflineMessages;
+
+  constructor(public payload: {message: string, createdAt: Date} ) {}
+}
+
+export class ResetOfflineMessages implements Action {
+  readonly type = ActionTypes.ResetOfflineMessages;
+}
+
 export type ChatActions = LoadMessagesBegin | LoadMessagesSuccess | LoadMessagesFailure| StartSendingMessage |
-  MessageSendSuccess | MessageSendFailure | ChatUpdated | GetOnlineUsers | SendOfflineMessages | StartOnlineOfflineCheck | SetIsOnline;
+  MessageSendSuccess | MessageSendFailure | ChatUpdated | GetOnlineUsers | SendOfflineMessages | StartOnlineOfflineCheck
+  | SetIsOnline | OfflineMessages | ResetOfflineMessages;
