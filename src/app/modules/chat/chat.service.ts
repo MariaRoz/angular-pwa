@@ -20,5 +20,9 @@ export class ChatService {
   getOnlineUsers(): Observable<string[]> {
     return this.http.get<string[]>('http://localhost:3000/users/online');
   }
+
+  sendOfflineMessages(data: object[]): Observable<object[]> {
+    return this.http.post<object[]>('http://localhost:3000/messages/offline', data);
+  }
 }
 

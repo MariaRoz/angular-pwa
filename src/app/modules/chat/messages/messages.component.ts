@@ -1,10 +1,10 @@
-import {AfterContentInit, AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Message } from '../../../models/message.interface';
 import {select, Store} from '@ngrx/store';
 import * as fromApp from '../../../store';
-import { LoadMessagesBegin, StartSendingMessage } from '../store/chat.actions';
+import { LoadMessagesBegin, StartOnlineOfflineCheck, StartSendingMessage } from '../store/chat.actions';
 import { Observable, of } from 'rxjs';
-import { selectMessages, selectOnlineUsers } from '../store/chat.selectors';
+import { selectMessages, selectOnlineOfflineCheck, selectOnlineUsers} from '../store/chat.selectors';
 import { selectCurrentUser } from '../../auth/store/auth.selector';
 import { GetCurrentUser } from '../../auth/store/auth.action';
 import { User } from '../../../models/user.interface';
@@ -18,6 +18,7 @@ import { User } from '../../../models/user.interface';
 export class MessagesComponent implements OnInit, AfterViewChecked {
   @ViewChild('scroll', {static: false}) private myScrollContainer: ElementRef;
   isLoading = false;
+  isOnline$: Observable<boolean>;
 
   public messages$: Observable<Message[]> = of([]);
   public user$: Observable<User> = of();
@@ -35,13 +36,16 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
 
     this.store.dispatch(new LoadMessagesBegin());
     this.store.dispatch(new GetCurrentUser());
+    this.store.dispatch(new StartOnlineOfflineCheck());
+
+    this.isOnline$ = this.store.select(selectOnlineOfflineCheck);
   }
 
   ngAfterViewChecked(): void {
     this.scrollToBottom();
   }
 
-  addMessage(message): void {
+  addMessage(message: string): void {
     this.store.dispatch(new StartSendingMessage({message}));
   }
 

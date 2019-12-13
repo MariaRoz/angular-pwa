@@ -51,3 +51,7 @@ mat-card-content {
 button {
   height: 50px;
 }
+.offline {
+  text-align: center;
+  color: crimson;
+}

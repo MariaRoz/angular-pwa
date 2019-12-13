@@ -30,6 +30,7 @@
         </mat-form-field>
         <button mat-raised-button color="accent" (click)="addMessage(messageInput.value)" type="button">Send</button>
       </div>
+        <p class="offline" [hidden]="isOnline$ | async">No internet, but your messages will be sent after the network connection</p>
       </div>
       <div class="chat-container__right">
         <p *ngFor="let onlineUser of onlineUsers | async">
