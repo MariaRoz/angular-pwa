@@ -2,9 +2,9 @@ import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@ang
 import { Message } from '../../../models/message.interface';
 import {select, Store} from '@ngrx/store';
 import * as fromApp from '../../../store';
-import { LoadMessagesBegin, SendOfflineMessages, StartOnlineOfflineCheck, StartSendingMessage } from '../store/chat.actions';
+import { LoadMessagesBegin, StartOnlineOfflineCheck, StartSendingMessage } from '../store/chat.actions';
 import { Observable, of } from 'rxjs';
-import { selectMessages, selectOnlineOfflineCheck, selectOnlineUsers } from '../store/chat.selectors';
+import { selectMessages, selectOnlineOfflineCheck, selectOnlineUsers} from '../store/chat.selectors';
 import { selectCurrentUser } from '../../auth/store/auth.selector';
 import { GetCurrentUser } from '../../auth/store/auth.action';
 import { User } from '../../../models/user.interface';
@@ -18,7 +18,6 @@ import { User } from '../../../models/user.interface';
 export class MessagesComponent implements OnInit, AfterViewChecked {
   @ViewChild('scroll', {static: false}) private myScrollContainer: ElementRef;
   isLoading = false;
-  offlineMessages: object[] = [];
   isOnline$: Observable<boolean>;
 
   public messages$: Observable<Message[]> = of([]);
@@ -40,13 +39,6 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
     this.store.dispatch(new StartOnlineOfflineCheck());
 
     this.isOnline$ = this.store.select(selectOnlineOfflineCheck);
-
-    this.isOnline$.subscribe(isOnline => {
-      if (isOnline && this.offlineMessages.length !== 0) {
-        this.store.dispatch(new SendOfflineMessages(this.offlineMessages));
-        this.offlineMessages = [];
-      }
-    });
   }
 
   ngAfterViewChecked(): void {
@@ -54,8 +46,7 @@ export class MessagesComponent implements OnInit, AfterViewChecked {
   }
 
   addMessage(message: string): void {
-    navigator.onLine ? this.store.dispatch(new StartSendingMessage({message})) :
-      this.offlineMessages.push({message, createdAt: new Date()});
+    this.store.dispatch(new StartSendingMessage({message}));
   }
 
   scrollToBottom(): void {
